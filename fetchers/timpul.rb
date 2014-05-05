@@ -1,6 +1,6 @@
-require_relative "../main"
+require_relative "fetcher"
 
-class TimpulFetcher
+class TimpulFetcher < Fetcher
   PAGES_DIR  = "./data/pages/timpul/"
   TITTER_URL = "https://twitter.com/Timpul"
 
@@ -48,24 +48,5 @@ class TimpulFetcher
     sleep 2
     puts "RestClient::BadGateway caught"
     retry
-  end
-
-  def progressbar
-    @progressbar ||= ProgressBar.new(most_recent_id - latest_stored_id, :bar, :counter, :rate, :eta)
-  end
-
-  def run
-    setup
-    puts "Fetching Timpul. Most recent: #{most_recent_id}. Last fetched: #{latest_stored_id}."
-
-    if latest_stored_id == most_recent_id
-      puts "Nothing to fetch for Timpul"
-      return
-    end
-
-    latest_stored_id.upto(most_recent_id) do |id|
-      fetch_single(id)
-      progressbar.increment!
-    end
   end
 end

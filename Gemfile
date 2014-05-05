@@ -5,5 +5,6 @@ gem 'i18n'
 gem 'nokogiri'
 gem 'pry'
 gem 'sqlite3'
-gem 'sequel'
+gem 'activerecord'
 gem 'progress_bar'
+

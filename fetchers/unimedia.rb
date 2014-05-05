@@ -1,6 +1,6 @@
-require_relative "../main"
+require_relative "fetcher"
 
-class UnimediaFetcher
+class UnimediaFetcher < Fetcher
   PAGES_DIR = "./data/pages/unimedia/"
   FEED_URL  = "http://unimedia.info/rss/news.xml"
 
@@ -27,29 +27,5 @@ class UnimediaFetcher
 
   def save(page, id)
     File.write(PAGES_DIR + id.to_s, page)
-  end
-
-  def fetch_single(id)
-    page = RestClient.get(link(id))
-    save(page, id)
-  end
-
-  def progressbar
-    @progressbar ||= ProgressBar.new(most_recent_id - latest_stored_id, :bar, :counter, :rate, :eta)
-  end
-
-  def run
-    setup
-    puts "Fetching Unimedia. Most recent: #{most_recent_id}. Last fetched: #{latest_stored_id}."
-
-    if latest_stored_id == most_recent_id
-      puts "Nothing to fetch for Unimedia"
-      return
-    end
-
-    latest_stored_id.upto(most_recent_id) do |id|
-      fetch_single(id)
-      progressbar.increment!
-    end
   end
 end
