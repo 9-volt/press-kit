@@ -43,7 +43,7 @@ class PublikaFetcher
     page = RestClient.get(link(id))
     save(page, id)
   rescue RestClient::Forbidden => error
-    puts error
+    puts "RestClient::Forbidden caught"
     puts link(id)
     save(RestClient.get("http://www.publika.md"), id)
   rescue RestClient::BadGateway => error

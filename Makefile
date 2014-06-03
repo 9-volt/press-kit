@@ -11,4 +11,6 @@ analyze: squash
 	ruby scripts/analyze.rb
 
 run: analyze
-	python -m SimpleHTTPServer &; sleep 1; open http://localhost:8000/visualization
+	(python -m SimpleHTTPServer &)
+	sleep 1
+	(open http://localhost:8000/visualization)

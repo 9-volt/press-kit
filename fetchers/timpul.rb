@@ -38,13 +38,13 @@ class TimpulFetcher
     page = RestClient.get(link(id))
     save(page, id)
   rescue URI::InvalidURIError => error
-    puts error
+    puts error.message
     puts link(id)
     # URI::InvalidURIError: bad URI(is not URI?):
     # http://ru.timpul.md/articol/35897-------–----.html
     save(RestClient.get("http://www.timpul.md"), id)
   rescue SocketError => error
-    puts error
+    puts error.message
     puts link(id)
     # getaddrinfo: nodename nor servname provided, or not known
     # http://www.timpul.md/u_58670/ also u_58671, u_58672
