@@ -42,10 +42,7 @@ class PublikaFetcher
   def fetch_single(id)
     page = RestClient.get(link(id))
     save(page, id)
-  rescue RestClient::Forbidden => error
-    puts "RestClient::Forbidden caught"
-    puts link(id)
-    save(RestClient.get("http://www.publika.md"), id)
+  rescue RestClient::Forbidden
   rescue RestClient::BadGateway => error
     sleep 2
     puts "RestClient::BadGateway caught"

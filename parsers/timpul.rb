@@ -73,8 +73,6 @@ class TimpulParser
       id:             id,
       url:            build_url(id)
     }
-  rescue => e
-    binding.pry
   end
 
   def save(id, hash)
@@ -92,7 +90,7 @@ class TimpulParser
     (latest_parsed_id..latest_stored_id).to_a.each do |id|
       hash = parse(load_doc(id), id)
       puts progress(id).to_s + "% done"
-      save(id, hash)
+      save(id, hash) unless hash.empty?
     end
   end
 end

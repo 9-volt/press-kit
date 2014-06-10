@@ -15,3 +15,6 @@ require_relative "fetchers/publika"
 
 require_relative "parsers/timpul"
 require_relative "parsers/unimedia"
+
+require_relative "cleaners/timpul"
+require_relative "cleaners/unimedia"
