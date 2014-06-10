@@ -43,6 +43,14 @@ class PublikaFetcher
     page = RestClient.get(link(id))
     save(page, id)
   rescue RestClient::Forbidden
+  # rescue Errno::ETIMEDOUT => e
+  #   sleep 2
+  #   puts "timeout caught"
+  #   retry
+  # rescue Errno::ECONNREFUSED => e
+  #   sleep 30
+  #   puts "refused connection"
+  #   retry
   rescue RestClient::BadGateway => error
     sleep 2
     puts "RestClient::BadGateway caught"
