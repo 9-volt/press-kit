@@ -14,3 +14,6 @@ run: analyze
 	(python -m SimpleHTTPServer &)
 	sleep 1
 	(open http://localhost:8000/visualization)
+
+clean:
+	ruby scripts/clean.rb
