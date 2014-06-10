@@ -88,9 +88,13 @@ class TimpulParser
 
   def run
     (latest_parsed_id..latest_stored_id).to_a.each do |id|
-      hash = parse(load_doc(id), id)
-      puts progress(id).to_s + "% done"
-      save(id, hash) unless hash.empty?
+      begin
+        hash = parse(load_doc(id), id)
+        puts progress(id).to_s + "% done"
+        save(id, hash) unless hash.empty?
+      rescue Errno::ENOENT => error
+        next
+      end
     end
   end
 end
