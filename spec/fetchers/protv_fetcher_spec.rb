@@ -1,11 +1,11 @@
-require_relative '../../fetchers/pro_tv'
+require_relative '../../fetchers/protv'
 
-describe ProTvFetcher do
+describe Fetchers::ProTV do
   let(:fetcher) { subject }
 
   it_behaves_like "a fetcher" do
 
-    let(:valid_ids) { %w(1637231 1637721 1637711) }
+    let(:valid_ids) { %w(1637231  1637721 1637711) }
 
     let(:invalid_ids) { %w(90) }
   end

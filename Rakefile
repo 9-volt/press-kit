@@ -14,7 +14,7 @@ namespace :fetch do
   end
 
   task :protv do
-    ProTvFetcher.new.run
+    Runners::ProTV.new.run
   end
 end
 
@@ -29,6 +29,10 @@ namespace :parse do
 
   task :unimedia do
     UnimediaParser.new.run
+  end
+
+  task :protv do
+    Parsers::ProTV.new.run
   end
 end
 

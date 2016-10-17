@@ -23,6 +23,7 @@ class SmartFetcher
     else
       nil
     end
+
   rescue RestClient::Forbidden => error
     puts "forbidden: #{url}"
     nil
