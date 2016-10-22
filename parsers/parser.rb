@@ -1,4 +1,9 @@
 module Parser
+
+  def available_ids
+    @latest_stored_id = Dir["#{@page_dir}*"].map { |f| f.split('.').first.gsub(@page_dir, "") }.map(&:to_i).sort || 0
+  end
+
   def build_url(id)
     "#{main_url}#{id}"
   end
@@ -17,13 +22,7 @@ module Parser
   end
 
   def latest_stored_id
-    available_pages.last || 0
-  end
-
-  def available_pages
-    Dir["#{page_dir}*"].map { |f| f.split('.').first.gsub(page_dir, "") }
-        .map(&:to_i)
-        .sort
+    available_ids.last || 0
   end
 
   def latest_parsed_id
@@ -37,7 +36,8 @@ module Parser
   end
 
   def run
-    (latest_parsed_id+1..latest_stored_id).to_a.each do |id|
+    available_ids[available_ids.index(latest_parsed_id)..latest_stored_id].to_a.each do |id|
+
       begin
         puts "\nT#{self.class.name}: #{progress(id)}"
         hash = parse(load_doc(id), id)

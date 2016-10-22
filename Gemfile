@@ -8,8 +8,9 @@ source "https://rubygems.org" do
     gem 'progress_bar'
     gem 'mongoid'
     gem 'savon'
-    gem 'parallel'
     gem 'rake'
+    gem 'parallel'
+    gem 'ruby-progressbar'
     gem 'settingslogic'
   end
 

@@ -6,6 +6,7 @@ require 'json'
 require 'i18n'
 require 'mongoid'
 require 'savon'
+require 'parallel'
 require 'settingslogic'
 require_relative 'lib/config/database'
 

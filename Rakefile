@@ -21,8 +21,16 @@ namespace :fetch do
     Fetchers::ProTv.new.run
   end
 
+  task :reverse_protv, [:first, :last] do |_, args|
+    Fetchers::ProTv.new.reverse_run(args[:first], args[:last])
+  end
+
   task :agora do
     Fetchers::Agora.new.run
+  end
+
+  task :work, [:option, :foo, :bar] => [:environment] do |t, args|
+    puts "work", args
   end
 end
 
