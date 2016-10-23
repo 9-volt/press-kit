@@ -45,8 +45,8 @@ module Parsers
 
       def run
         define_range(available_ids, latest_parsed_id).each do |id|
-          puts "\nT#{self.class.name}: #{progress(id)}"
           begin
+            puts "\n#{self.class.name}: #{progress(id)}"
             html = load_doc(id)
             hash = parse(html, id)
 

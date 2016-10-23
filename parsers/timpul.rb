@@ -1,6 +1,7 @@
 module Parsers
   class Timpul
     include Strategy::Incremental
+    include Helpers::SanitizeDates
     attr_reader :url, :storage, :source
 
     def initialize(storage: LocalStorageFactory.timpul, url: URL::Timpul.new)
@@ -21,15 +22,15 @@ module Parsers
       return if sanitized_content.size == 0
 
       {
-          source:         source,
-          title:          title,
-          original_time:  timestring,
-          datetime:       parse_timestring(timestring),
-          views:          0, # No data
-          comments:       0, # Disqus iframe
-          content:        sanitized_content,
-          article_id:     id.to_i,
-          url:            build_url(id)
+        source:         source,
+        title:          title,
+        original_time:  timestring,
+        datetime:       parse_timestring(timestring),
+        views:          0, # No data
+        comments:       0, # Disqus iframe
+        content:        sanitized_content,
+        article_id:     id.to_i,
+        url:            build_url(id)
       }
     end
 
@@ -58,20 +59,8 @@ module Parsers
     end
 
     def parse_timestring(timestring)
-      # 27 Aprilie 2014, ora 08:22
-      timestring.gsub!("Aprilie",    "apr")
-      timestring.gsub!("Mai",        "may")
-      timestring.gsub!("Iunie",      "jun")
-      timestring.gsub!("Iulie",      "jul")
-      timestring.gsub!("August",     "aug")
-      timestring.gsub!("Septembrie", "sep")
-      timestring.gsub!("Octombrie",  "oct")
-      timestring.gsub!("Noiembrie",  "nov")
-      timestring.gsub!("Decembrie",  "dec")
-      timestring.gsub!("Ianuarie",   "jan")
-      timestring.gsub!("Februarie",  "feb")
-      timestring.gsub!("Martie",     "mar")
-      return DateTime.strptime(timestring, "%d %b %Y, ora %k:%M").iso8601
+      sanitized_timestring = months_ro_to_en(timestring)
+      DateTime.strptime(sanitized_timestring , "%d %b %Y, ora %k:%M").iso8601
     end
   end
 end

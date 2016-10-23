@@ -9,8 +9,8 @@ module Parsers
       @source = "unimedia"
     end
 
-    def parse(text, id)
-      doc = Nokogiri::HTML(text, nil, "UTF-8")
+    def parse(html, id)
+      doc = Nokogiri::HTML(html, nil, "UTF-8")
       return if cannot_be_parsed?(doc)
 
       title = doc.css("h1.bigtitlex2").first.text rescue doc.title

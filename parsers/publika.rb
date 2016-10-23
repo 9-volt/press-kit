@@ -1,6 +1,7 @@
 module Parsers
   class Publika
     include Strategy::Incremental
+    include Helpers::SanitizeDates
     attr_reader :url, :storage, :source
 
     def initialize(storage: LocalStorageFactory.publika, url: URL::Publika.new)
@@ -9,8 +10,8 @@ module Parsers
       @source = "publika"
     end
 
-    def parse(text, id)
-      doc = Nokogiri::HTML(text, nil, "UTF-8")
+    def parse(html, id)
+      doc = Nokogiri::HTML(html, nil, "UTF-8")
 
       return unless has_data?(doc)
 
@@ -22,15 +23,15 @@ module Parsers
       content = doc.xpath("//div[@itemprop='articleBody']").text
 
       {
-          source:         source,
-          title:          title,
-          original_time: "Date: #{date} Time: #{ora}",
-          datetime:       parse_timestring(date.concat(ora)),
-          views:          0,
-          comments:       0,
-          content:        content,
-          article_id:     id,
-          url:            build_url(id)
+        source:         source,
+        title:          title,
+        original_time: "Date: #{date} Time: #{ora}",
+        datetime:       parse_timestring(date.concat(ora)),
+        views:          0,
+        comments:       0,
+        content:        content,
+        article_id:     id,
+        url:            build_url(id)
       }
     rescue => e
       puts "Publika: #{e}"
@@ -41,20 +42,8 @@ module Parsers
     end
 
     def parse_timestring(timestring)
-      # ora: 09:42, 02 mai 2009
-      timestring.gsub!("Aprilie",    "apr")
-      timestring.gsub!("Mai",        "may")
-      timestring.gsub!("Iunie",      "jun")
-      timestring.gsub!("Iulie",      "jul")
-      timestring.gsub!("August",     "aug")
-      timestring.gsub!("Septembrie", "sep")
-      timestring.gsub!("Octombrie",  "oct")
-      timestring.gsub!("Noiembrie",  "nov")
-      timestring.gsub!("Decembrie",  "dec")
-      timestring.gsub!("Ianuarie",   "jan")
-      timestring.gsub!("Februarie",  "feb")
-      timestring.gsub!("Martie",     "mar")
-      DateTime.strptime(timestring, "%d %b %Y ora %k:%M").iso8601
+      sanitized_timestring = months_ro_to_en(timestring)
+      DateTime.strptime(sanitized_timestring , "%d %b %Y ora %k:%M").iso8601
     end
   end
 end

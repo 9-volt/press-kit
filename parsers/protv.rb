@@ -22,15 +22,15 @@ module Parsers
       content.force_encoding("UTF-8")
 
       {
-          source: source,
-          title: title,
-          original_time: date_time,
-          datetime: parse_timestring(date_time),
-          views: 0,
-          comments: 0,
-          content: content,
-          article_id: id,
-          url: build_url(id)
+        source: source,
+        title: title,
+        original_time: date_time,
+        datetime: parse_timestring(date_time),
+        views: 0,
+        comments: 0,
+        content: content,
+        article_id: id,
+        url: build_url(id)
       }
     rescue => e
       puts "ProTV: #{e}"
