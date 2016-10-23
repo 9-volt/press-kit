@@ -84,6 +84,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    ruby-progressbar (1.8.1)
     safe_yaml (1.0.4)
     savon (2.11.1)
       akami (~> 1.2)
@@ -126,10 +127,11 @@ DEPENDENCIES
   rake!
   rest-client!
   rspec!
+  ruby-progressbar!
   savon!
   settingslogic!
   vcr!
   webmock!
 
 BUNDLED WITH
-   1.13.5
+   1.13.6

@@ -1,6 +1,10 @@
 module Parsers
   module Strategy
     module Incremental
+      def available_ids
+        Dir["#{@page_dir}*"].map { |f| f.split('.').first.gsub(@page_dir, "") }.map(&:to_i).sort || 0
+      end
+
       def build_url(id)
         url.build(id)
       end
@@ -32,7 +36,7 @@ module Parsers
       end
 
       def run
-        (latest_parsed_id+1..latest_stored_id).each do |id|
+        available_ids[available_ids.index(latest_parsed_id)..latest_stored_id].to_a.each do |id|
           begin
             puts "\nT#{self.class.name}: #{progress(id)}"
             html = load_doc(id)
