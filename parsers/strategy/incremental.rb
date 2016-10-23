@@ -49,6 +49,7 @@ module Parsers
             puts "\n#{self.class.name}: #{progress(id)}"
             html = load_doc(id)
             hash = parse(html, id)
+            puts hash
 
             if hash
               save(hash)
