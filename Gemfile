@@ -9,8 +9,6 @@ source "https://rubygems.org" do
     gem 'mongoid'
     gem 'savon'
     gem 'rake'
-    gem 'parallel'
-    gem 'ruby-progressbar'
     gem 'settingslogic'
   end
 

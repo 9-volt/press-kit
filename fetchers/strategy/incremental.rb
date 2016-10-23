@@ -1,20 +1,27 @@
 module Fetchers
   module Strategy
     module Incremental
-      def run
-        class_name = self.class.name
+      def run(start = nil, finish = nil)
+        run_info
+
+        page_ids(start, finish).each do |id|
+          page = fetch_single(id)
+          save(page, id) if valid?(page)
+          progressbar.increment!
+        end
+      end
+
+      def run_info
         puts "Fetching #{class_name}"
 
         if all_pages_are_fetched?
           puts "Nothing to fetch for #{class_name}"
           return
         end
+      end
 
-        page_ids.each do |id|
-          page = fetch_single(id)
-          save(page, id) if valid?(page)
-          progressbar.increment!
-        end
+      def class_name
+        self.class.name
       end
 
       def build_url(id)

@@ -2,7 +2,7 @@ module Parsers
   module Strategy
     module Incremental
       def available_ids
-        Dir["#{@page_dir}*"].map { |f| f.split('.').first.gsub(@page_dir, "") }.map(&:to_i).sort || 0
+        storage.available_ids
       end
 
       def build_url(id)
@@ -31,14 +31,22 @@ module Parsers
         0
       end
 
+      def define_range(available_ids, latest_parsed_id)
+        if latest_parsed_id == 0
+          available_ids[0..available_ids.last]
+        else
+          available_ids[available_ids.index(latest_parsed_id)..available_ids.last]
+        end
+      end
+
       def progress(id)
         "#{id}/#{latest_stored_id}"
       end
 
       def run
-        available_ids[available_ids.index(latest_parsed_id)..latest_stored_id].to_a.each do |id|
+        define_range(available_ids, latest_parsed_id).each do |id|
+          puts "\nT#{self.class.name}: #{progress(id)}"
           begin
-            puts "\nT#{self.class.name}: #{progress(id)}"
             html = load_doc(id)
             hash = parse(html, id)
 
