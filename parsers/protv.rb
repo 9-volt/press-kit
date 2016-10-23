@@ -10,6 +10,8 @@ module Parsers
     end
 
     def parse(html, id)
+      html.gsub!("&shy;","")
+
       doc = Nokogiri::HTML(html, nil, "UTF-8")
 
       return unless has_data?(doc)
@@ -18,7 +20,7 @@ module Parsers
       date_time = doc.xpath("//div[@itemprop='datePublished']").text
 
       content = doc.xpath("//div[contains(@class, 'articleContent')]//p").text
-      content.force_encoding("BINARY").delete!(160.chr+194.chr)
+      content.gsub!(/[^a-z0-9\s.-:;)(]/i, '')
       content.force_encoding("UTF-8")
 
       {
