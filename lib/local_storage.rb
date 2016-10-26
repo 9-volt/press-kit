@@ -7,7 +7,7 @@ class LocalStorage
   end
 
   def available_ids
-    all_ids || 0
+    all_ids
   end
 
   def latest_page_id
