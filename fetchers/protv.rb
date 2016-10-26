@@ -28,12 +28,8 @@ module Fetchers
       !doc.at_css('//h1[@itemprop="name headline"]').nil?
     end
 
-    def page_ids(start, finish)
-      unless start && finish
-        start = latest_stored_id == 0 ? 1 : latest_stored_id
-        finish = most_recent_id
-      end
-
+    def page_ids(start=latest_stored_id, finish=most_recent_id)
+      start = start == 0 ? 1 : start
       (start..finish).step(10)
     end
   end

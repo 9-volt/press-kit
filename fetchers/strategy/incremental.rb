@@ -11,6 +11,12 @@ module Fetchers
         end
       end
 
+
+    def page_ids(start=latest_stored_id, finish=most_recent_id)
+      (start..finish)
+    end
+
+
       def run_info
         puts "Fetching #{class_name}"
 
