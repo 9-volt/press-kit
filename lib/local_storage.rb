@@ -15,16 +15,14 @@ class LocalStorage
   end
 
   def save(page, id)
-    Zlib::GzipWriter.open(dir + id.to_s + ".html.gz") do |gz|
-      gz.write page
-    end
+    path = "#{dir}#{id}.html.gz"
+    save_zip(page, path)
   end
 
   def load_doc(id)
-    Zlib::GzipReader.open("#{dir}#{id}.html.gz") { |gz| gz.read }
+    path = "#{dir}#{id}.html.gz"
+    load_zip(path)
   end
-
-  private
 
   def get_latest_page_id
     all_ids.last || 0
@@ -34,8 +32,37 @@ class LocalStorage
     Dir["#{dir}*"].map { |f| f.split('.').first.gsub(dir, "") }.map(&:to_i).sort
   end
 
+  private
+
   def create_directory_if_missing
     FileUtils.mkdir_p dir
+  end
+
+  def load_zip(path)
+    Zlib::GzipReader.open(path) { |gz| gz.read }
+  end
+
+  def save_zip(page, path)
+    Zlib::GzipWriter.open(path) { |gz| gz.write(page) }
+  end
+end
+
+class PrimeLocalStorage < LocalStorage
+  PageAndCategory = Struct.new(:page, :category)
+
+  def save(page, id, category)
+    path = "#{dir}#{id}.#{category}.html.gz"
+    save_zip(page, path)
+  end
+
+  def load_doc(id)
+    path = Dir["#{dir}#{id}.*.html.gz"].first
+    page = load_zip(path)
+    PageAndCategory.new(page, extract_category(path))
+  end
+  
+  def extract_category(path)
+    path.match(/\d+\.([A-z]+)\./).captures.first
   end
 end
 
@@ -61,6 +88,10 @@ class LocalStorageFactory
 
     def unimedia
       LocalStorage.new(Settings.storage_dir.unimedia)
+    end
+
+    def prime
+      PrimeLocalStorage.new(Settings.storage_dir.prime)
     end
   end
 end

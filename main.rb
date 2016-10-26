@@ -33,6 +33,7 @@ require_relative "fetchers/unimedia"
 require_relative "fetchers/publika"
 require_relative "fetchers/protv"
 require_relative "fetchers/agora"
+require_relative "fetchers/prime"
 
 require_relative "parsers/strategy/incremental"
 require_relative "parsers/helpers"

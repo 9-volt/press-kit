@@ -57,7 +57,8 @@ class Analyzer
           occurences = if monthly_count == 0
             0.0
           else
-            pages.count {|p| p.mentions[person.key.to_s]}
+            total_count = pages.count {|p| p.mentions[person.key.to_s]}
+            (total_count.to_f / monthly_count).round(2)
           end
 
           month_data[person.key] = {

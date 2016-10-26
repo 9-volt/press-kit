@@ -43,7 +43,7 @@ module Parsers
       timestring.gsub!("iun", "jun")
       timestring.gsub!("iul", "jul")
       timestring.gsub!("noi", "nov")
-      return DateTime.strptime(timestring, "ora: %k:%M, %d %b %Y").iso8601
+      DateTime.strptime(timestring, "ora: %k:%M, %d %b %Y").iso8601
     end
   end
 end

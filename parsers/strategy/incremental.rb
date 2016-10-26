@@ -31,7 +31,7 @@ module Parsers
         0
       end
 
-      def define_range(available_ids, latest_parsed_id)
+      def range(available_ids, latest_parsed_id)
         if latest_parsed_id == 0
           available_ids[0..available_ids.last]
         else
@@ -44,7 +44,7 @@ module Parsers
       end
 
       def run
-        define_range(available_ids, latest_parsed_id).each do |id|
+        range(available_ids, latest_parsed_id).each do |id|
           begin
             puts "\n#{self.class.name}: #{progress(id)}"
             html = load_doc(id)

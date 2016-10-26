@@ -30,6 +30,11 @@ namespace :fetch do
   task :agora, [:first, :last] do |_task, options|
     Fetchers::Agora.new.run(options[:first], options[:last])
   end
+
+  desc "Fetch resources from Prime Source"
+  task :prime, [:first, :last] do |_task, options|
+    Fetchers::Prime.new.run(options[:first], options[:last])
+  end
 end
 
 namespace :parse do

@@ -8,7 +8,7 @@ module Fetchers
       @url = url
     end
 
-  private
+    private
 
     def fetch_most_recent_id
       html = RestClient.get(url.base)
