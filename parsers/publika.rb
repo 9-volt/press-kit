@@ -38,7 +38,7 @@ module Parsers
     end
 
     def has_data?(doc)
-      doc.xpath("//div[@class='articleTags']").any?
+      doc.xpath("//div[@class='articleTags']").any? || doc.xpath("//div[@itemprop='articleBody']").any?
     end
 
     def parse_timestring(timestring)

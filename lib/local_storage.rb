@@ -6,6 +6,10 @@ class LocalStorage
     create_directory_if_missing
   end
 
+  def available_ids
+    all_ids || 0
+  end
+
   def latest_page_id
     @latest_page_id ||= get_latest_page_id
   end
@@ -20,16 +24,18 @@ class LocalStorage
     load_zip(path)
   end
 
-
   def get_latest_page_id
-    Dir["#{dir}*"].map{ |f| f.split(".").first.gsub(dir, "") }
-        .map(&:to_i)
-        .sort
-        .last || 0
+    all_ids.last || 0
   end
 
+  def all_ids
+    Dir["#{dir}*"].map { |f| f.split('.').first.gsub(dir, "") }.map(&:to_i).sort
+  end
+
+  private
+
   def create_directory_if_missing
-    FileUtils.mkdir_p(dir)
+    FileUtils.mkdir_p dir
   end
 
   def load_zip(path)

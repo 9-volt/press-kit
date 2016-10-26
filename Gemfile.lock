@@ -54,7 +54,6 @@ GEM
     nori (2.6.0)
     options (2.3.2)
     origin (2.2.0)
-    parallel (1.8.0)
     progress_bar (1.0.5)
       highline (~> 1.6)
       options (~> 2.3.0)
@@ -119,7 +118,6 @@ DEPENDENCIES
   i18n!
   mongoid!
   nokogiri!
-  parallel!
   progress_bar!
   pry!
   pry-byebug!
@@ -132,4 +130,4 @@ DEPENDENCIES
   webmock!
 
 BUNDLED WITH
-   1.13.5
+   1.13.6

@@ -1,6 +1,10 @@
 module Parsers
   module Strategy
     module Incremental
+      def available_ids
+        storage.available_ids
+      end
+
       def build_url(id)
         url.build(id)
       end
@@ -27,16 +31,25 @@ module Parsers
         0
       end
 
+      def range(available_ids, latest_parsed_id)
+        if latest_parsed_id == 0
+          available_ids[0..available_ids.last]
+        else
+          available_ids[available_ids.index(latest_parsed_id)..available_ids.last]
+        end
+      end
+
       def progress(id)
         "#{id}/#{latest_stored_id}"
       end
 
       def run
-        (latest_parsed_id+1..latest_stored_id).each do |id|
+        range(available_ids, latest_parsed_id).each do |id|
           begin
             puts "\n#{self.class.name}: #{progress(id)}"
             html = load_doc(id)
             hash = parse(html, id)
+            puts hash
 
             if hash
               save(hash)

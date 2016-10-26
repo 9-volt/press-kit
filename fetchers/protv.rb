@@ -10,7 +10,7 @@ module Fetchers
       @url = url
     end
 
-  private
+    private
 
     def fetch_most_recent_id
       resp = JSON.parse(RestClient.get(LATEST_NEWS))
@@ -28,9 +28,13 @@ module Fetchers
       !doc.at_css('//h1[@itemprop="name headline"]').nil?
     end
 
-    def page_ids
-      start = latest_stored_id == 0 ? 1 : latest_stored_id
-      (start..most_recent_id).step(10)
+    def page_ids(start, finish)
+      unless start && finish
+        start = latest_stored_id == 0 ? 1 : latest_stored_id
+        finish = most_recent_id
+      end
+
+      (start..finish).step(10)
     end
   end
 end

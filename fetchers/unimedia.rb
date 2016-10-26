@@ -10,7 +10,7 @@ module Fetchers
       @url = url
     end
 
-  private
+    private
 
     def fetch_most_recent_id
       doc = Nokogiri::XML(RestClient.get(FEED_URL))
@@ -27,6 +27,15 @@ module Fetchers
       return false if doc.title.match(/pagină nu există/)
       return false if doc.title.match(/UNIMEDIA - Portalul de știri nr. 1 din Moldova/)
       true
+    end
+
+    def page_ids(start, finish)
+      unless start && finish
+        start = latest_stored_id == 0 ? 1 : latest_stored_id
+        finish = most_recent_id
+      end
+
+      (start..finish)
     end
   end
 end

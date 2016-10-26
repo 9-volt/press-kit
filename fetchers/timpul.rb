@@ -8,7 +8,7 @@ module Fetchers
       @url = url
     end
 
-  private
+    private
 
     def fetch_most_recent_id
       html = RestClient.get(url.base)
@@ -29,6 +29,15 @@ module Fetchers
       return false unless doc.css(".content").size > 0
 
       true
+    end
+
+    def page_ids(start, finish)
+      unless start && finish
+        start = latest_stored_id == 0 ? 1 : latest_stored_id
+        finish = most_recent_id
+      end
+
+      (start..finish)
     end
   end
 end

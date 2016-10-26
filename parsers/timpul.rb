@@ -41,7 +41,6 @@ module Parsers
       end
     end
 
-
     def cannot_be_parsed?(doc)
       wrong_title?(doc) || empty_content?(doc)
     end

@@ -2,8 +2,8 @@ describe Parsers::Publika do
   include_context :db
 
   let(:storage) { LocalStorage.new("spec/fixtures/publika/") }
-  let(:valid_ids) { %w(10211) }
-  let(:invalid_ids) { %w(15) }
+  let(:valid_ids) { %w(10211 1223871) }
+  let(:invalid_ids) { %w(21) }
 
   it_behaves_like "a parser" do
     it "saves to the database" do
