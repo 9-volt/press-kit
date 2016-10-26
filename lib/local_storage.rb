@@ -70,6 +70,9 @@ end
 # kinda makes sense(ish). Good Lord it's not some sort of abstract factory
 class LocalStorageFactory
   class << self
+    def in_profunzime
+      LocalStorage.new(Settings.storage_dir.in_profunzime)
+    end
     def agora
       LocalStorage.new(Settings.storage_dir.agora)
     end

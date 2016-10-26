@@ -11,6 +11,22 @@ module URL
     end
   end
 
+  class InProfunzime
+    attr_reader :base
+
+    def initialize
+      @base = "http://inprofunzime.protv.md/"
+    end
+
+    def build(id)
+      "#{base}/stiri/politic/---#{id}.html"
+    end
+
+    def latest_news
+      "#{base}/scripts/ultimaora.php"
+    end
+  end
+
   class Agora
     attr_reader :base
 
