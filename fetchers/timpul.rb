@@ -30,14 +30,5 @@ module Fetchers
 
       true
     end
-
-    def page_ids(start, finish)
-      unless start && finish
-        start = latest_stored_id == 0 ? 1 : latest_stored_id
-        finish = most_recent_id
-      end
-
-      (start..finish)
-    end
   end
 end
