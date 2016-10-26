@@ -18,7 +18,11 @@ class Analyzer
     without_mentions.each do |page|
       page.mentions ||= {}
       People.each do |person|
-        page.mentions[person.key] = person.terms.any? {|t| page.content.include?(t) }
+        begin
+          page.mentions[person.key] = person.terms.any? {|t| page.content.include?(t) }
+        rescue
+          p page
+        end
       end
 
       page.total_mentions = page.mentions.values.count(true)
@@ -33,7 +37,7 @@ class Analyzer
     data = {}
     progressbar = ProgressBar.new(6 * 12, :bar, :counter, :rate, :eta)
 
-    (2008..2014).each do |year|
+    (2008..2016).each do |year|
       year_data = data[year.to_s] ||= {}
 
       (1..12).each do |month|
@@ -53,8 +57,7 @@ class Analyzer
           occurences = if monthly_count == 0
             0.0
           else
-            total_count = pages.count {|p| p.mentions[person.key.to_s]}
-            (total_count.to_f / monthly_count).round(2)
+            pages.count {|p| p.mentions[person.key.to_s]}
           end
 
           month_data[person.key] = {

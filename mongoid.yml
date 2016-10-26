@@ -1,7 +1,7 @@
 development:
   clients:
     default:
-      database: cuvinte_test
+      database: cuvinte
       hosts:
         - localhost:27017
 production:

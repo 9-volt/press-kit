@@ -10,7 +10,7 @@ module Fetchers
       @url = url
     end
 
-  private
+    private
 
     def fetch_most_recent_id
       resp = JSON.parse(RestClient.get(LATEST_NEWS))
