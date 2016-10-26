@@ -1,7 +1,7 @@
 module Fetchers
   module Strategy
     module Incremental
-      def run(start=latest_stored_id, most_recent_id)
+      def run(start=latest_stored_id, finish=most_recent_id)
         run_info
 
         page_ids(start, finish).each do |id|
