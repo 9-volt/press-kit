@@ -30,7 +30,7 @@ module Fetchers
       !page.nil? && page.include?("publicat in data de")
     end
 
-    def page_ids(start, finish)
+    def page_ids(start=latest_stored_id, finish=most_recent_id)
       start = start == 0 ? 1 : start
       (start..finish).step(10)
     end
