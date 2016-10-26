@@ -8,7 +8,7 @@ module Fetchers
       @url = url
     end
 
-    def run(start = nil, finish = nil)
+    def run(start=latest_stored_id, finish=most_recent_id)
       run_info
 
       page_ids(start, finish).each do |id|
