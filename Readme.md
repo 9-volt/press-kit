@@ -18,9 +18,6 @@ There are several steps:
 - Analyze the full data set
 - Create a visualization
 
-Run `make run`, wait around 6 hours and you'll have everything.
-You'll also need around 7GB of disk space.
-
 Use rake tasks to trigger fetchers and parsers. 
 Ex. `rake fetch:publika` or `rake parse:unimedia`
 
@@ -30,3 +27,4 @@ Currently in stock:
 - Unimedia
 - Publika
 - Timpul
+- Agora
